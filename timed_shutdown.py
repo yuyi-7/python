@@ -3,6 +3,7 @@ print('-----------------------------------------------------')
 print('这是一个 定时关机 脚本\n\n如果想取消定时关机请输入 off \n\n')
 print('说明：此脚本有两种模式\n\n  模式1为设定关机时间点,比如设定23:50关机，脚本便收集系统时间，设定在23:50关机\n\n  模式2为设定时间段,比如设定12:00便在12小时后关机，或是设定50便在50分钟后关机')
 print('-----------------------------------------------------')
+
 mode=input('请输入 mode1 或者是 mode2 或是取消关机计划:')
 
 if mode=='mode1':
@@ -37,7 +38,7 @@ if mode=='mode1':
  os.system('shutdown -s -t %d' %sec )
 
 elif mode=='mode2':
-	print('请输入要在多久后关机')
+	print('请输入要在多久后关机:')
 	while True:
 	 input_times=input('格式为 小时:分钟 如01:30 或者 直接输入分钟数 ：')
 	
@@ -47,7 +48,7 @@ elif mode=='mode2':
 	 	sec=hoursset*3600+minsset*60
 	 	break
 		
-	 elif re.match(r'[\d]+',input_times):
+	 elif re.match('\d\d\d',input_times):
 		 sec = int(input_times) *60
 		 break
 	 else:print('格式不正确，请重新输入')
@@ -55,4 +56,6 @@ elif mode=='mode2':
 
 elif mode=='off':
 	os.system('shutdown -a')
+	
+else :print('输入错误，请输入mode1或者mode2，请重新输入')
 	
