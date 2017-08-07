@@ -1,18 +1,17 @@
-from tkinter import *
+from PIL import Image, ImageDraw, ImageFont
 
-def func(event):
-    xin = Tk()
-    xin.wm_title('Message')
-    t = e.get()
-    g = 'Hello,%s' % t
-    w1 = Label(xin, text = g)
-    w1.pack()
-    xin.mainloop()
-root = Tk()
-root.wm_title('Hello World')
-e = Entry(root)
-e.pack()
-b1 = Button(root, text = 'Hello')
-b1.bind('<Button-1>', func)
-b1.pack()
-root.mainloop()
+def add_num(img):
+	im = ImageDraw.Draw(img)
+	myfont = ImageFont.truetype(r'C:/windows/fonts/Arial.ttf',size=40)
+	wid,hei = img.size
+	im.text((wid-80,0),'899',font=myfont,fill='red')
+	
+def size_change(img):
+	image = img.resize((192*4,108*4))
+	return image
+
+if __name__=='__main__':
+	image = Image.open(r'C:\Users\Administrator\3c731efa828ba61ec124710a4234970a314e5997.jpg')
+	image = size_change(image)
+	add_num(image)
+	image.save('result.jpg')
