@@ -1,17 +1,39 @@
-from PIL import Image, ImageDraw, ImageFont
+#!/usr/bin/env python
+# encoding: utf-8
 
-def add_num(img):
-	im = ImageDraw.Draw(img)
-	myfont = ImageFont.truetype(r'C:/windows/fonts/Arial.ttf',size=40)
-	wid,hei = img.size
-	im.text((wid-80,0),'899',font=myfont,fill='red')
+import re
+
+#在一个文件中查找特定的单词
+n=0
+word='you'
+
+with open(r'C:\Users\Administrator\test.txt','r') as f:
+
+	for lines in f.readlines():
+		
+		if re.findall(word,lines.lower()):
+			n = n+1
+print('有%d个%s'%(n,word))
+
+
+with open(r'C:\Users\Administrator\test.txt','r') as f:
+	n=0
+	files = f.read()
+	words = files.split()
+
+	n = len(words)
 	
-def size_change(img):
-	image = img.resize((192*4,108*4))
-	return image
+print('有%d个单词'%n)
+print(words)
 
-if __name__=='__main__':
-	image = Image.open(r'C:\Users\Administrator\3c731efa828ba61ec124710a4234970a314e5997.jpg')
-	image = size_change(image)
-	add_num(image)
-	image.save('result.jpg')
+with open(r'C:\Users\Administrator\test.txt','r') as f:
+	data = f.read()
+	lis = data.split()
+	dic={}
+	for x in re.findall('[a-zA-z]+',lis):
+		if x not in dic:
+			dic[x] = 1
+		else:
+			dic[x] += 1
+print(dic)
+	
