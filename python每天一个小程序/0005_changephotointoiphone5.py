@@ -24,8 +24,8 @@ def chagesize(images):
 	
 	w,h = images.size
 	if w>iw:
-	   	h=iw * h//w
-	   	w=iw
+	   	h = iw * h//w
+	   	w = iw
 	elif h>640:
 		  w = ih * w//h
 		  h=ih
