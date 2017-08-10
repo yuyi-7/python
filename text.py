@@ -1,38 +1,38 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-'第 0006 题： 你有一个目录，放了你一个月的日记，都是 txt，为了避免分词的问题，假设内容都是英文，请统计出你认为每篇日记最重要的词。'
+'第 0007 题： 有个目录，里面是你自己写过的程序，统计一下你写过多少行代码。包括空行和注释，但是要分别列出来。'
 
 import os
 import re
-from mypython import dic
 
-filetxt=[]
-def getfile():
-	path=input('please input path: ')
+tool=[]
+def getfiles():
+	path=input('please input the path: ')
 	for root,dirs,files in os.walk(path):
 		for f in files:
-			if f.lower().endswith('.txt'):
-				filetxt.append(os.path.join(root,f))
+			if f.lower().endswith('.py'):
 				
-
-def findword():
-	word={}
-	for i in range(len(filetxt)):
-		with open(filetxt[i]) as f:
-			words = f.read()
-			word_dic = re.findall(r'[a-z]+',words.lower())
-		
-			for w in word_dic:
-				if w not in word:
-					word[w] = 1
-				elif w in word:
-					word[w] += 1
-			s=dic.dict2list(word)
-			sorte = sorted(s,key=lambda x:x[1],reverse = True)
-			print('在%s文件中，单词%s出现了%s次\n'%(os.path.abspath(filetxt[i]),sorte[0][0],sorte[0][1]))
+				tool.append(root+'/'+f)
 			
-		
+def cul():
+	n=r=z=0
+	for i in range(len(tool)):
+		with open(tool[i],'r',encoding='utf-8') as f:
+			for lines in f.readline():
+				n = n + 1
+				
+				
+				if lines.strip() == '':
+						r = r + 1
+				
+				if re.match(r'^#',lines.strip()):
+					z += 1
+			
+					
+	print('你总共写了%d行代码，%d个空行，%d行注释'%(n,r,z))
+	
 if __name__=='__main__':
-	getfile()
-	findword()
+	getfiles()
+	cul()
+					
