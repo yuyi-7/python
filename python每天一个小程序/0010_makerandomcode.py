@@ -22,7 +22,7 @@ for x in range(w):
 for i in range(4):
 	draw.text((i*60+10,10),chr(random.randint(65,90)),font = font,fill = (random.randint(32,125),random.randint(32,125),random.randint(32,125)))
 
-image = image.filter(ImageFilter.BLUR)
+image = image.filter(ImageFilter.BLUR) #模糊滤镜
 
 image.show()
 					
