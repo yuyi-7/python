@@ -48,8 +48,8 @@ def getdata(shit):
 					real.append(nrow2[0])
 			flag1 += 1
 			flag += 1
-
-	wrok.save(r'C:\Users\Administrator\Desktop\区域.xls')
+	quyu = input('请输入是哪一区域以方便来保存文件：')
+	wrok.save(r'C:\Users\Administrator\Desktop\区域%s.xls'%(quyu))
 	if flag<exit_flag1:
 		print('输入错误，有数据不存在')
 	return real
@@ -90,7 +90,9 @@ def creat():
 	wrok.save(r'C:\Users\Administrator\Desktop\矩阵%s.xls'%num)
 
 if __name__ =='__main__':
-	caozuo = input('请确定要执行什么操作\n--------------------------------\n操作1：确定正确的地点坐标\n操作2：建立矩阵\n请输入1或者2：')
+	print('说明：把shangwu.xls文件放在桌面即可运行脚本\n\n===============================\n\n')
+	print('请确定要执行什么操作\n--------------------------------\n\n--------------------------------')
+	caozuo = input('操作1为转换订单号为真实位置并存储在桌面的区域表格中\n-----------------------------------\n操作2为创建矩阵并保存在桌面的矩阵表格中\n======================================\n请输入是1或者是2：')
 	if caozuo == '1':
 		a = getin()
 		getdata(a)
