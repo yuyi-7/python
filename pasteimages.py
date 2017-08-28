@@ -41,4 +41,9 @@ if __name__ == '__main__':
 	c=input('输入保存最后图片的路径：')
 	
 	past = Paste(a,b,c)
-	past.pastehigh()
+	k = input('请输入是垂直(width)合成还是水平(high)合成：')
+	if k == 'width':
+		past.pastehigh()
+
+	elif k == 'high':
+		past.pastewidth()
