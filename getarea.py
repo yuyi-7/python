@@ -94,7 +94,7 @@ def creat():
 				
 	for n in range(len(data)):
 		sheet.write(len(data)+1,n,data[n])
-	save_path = os.path.join(path,'矩阵%s,xls'%(num))
+	save_path = os.path.join(path,'矩阵%s.xls'%(num))
 	wrok.save(save_path)
 	print('Work Done')
 
