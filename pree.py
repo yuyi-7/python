@@ -6,13 +6,14 @@ from bs4 import BeautifulSoup
 import os
 import random
 
-
 path = r'D:\mzitu'
 if not os.path.isdir(path):
 	os.mkdir(path)
 
 
-headers = {'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"}
+
+headers = {'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1",
+'Referer':"http://www.mzitu.com/101553"}
 star_html = requests.get('http://www.mzitu.com/all',headers = headers)
 soup = BeautifulSoup(star_html.text,'lxml')
 li_list = soup.find('div',class_='all').find_all('a')
