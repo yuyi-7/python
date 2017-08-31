@@ -34,6 +34,6 @@ for li in li_list:
 		img_url = img_soup.find('div',class_='main-image').find('img').get('src')
 		img = download.get(img_url,3)
 		print('抓取%s,开始保存'%(img_url))
-		f = open(new_path+'\\'+random.choice('rtyugdsczxbgd263561')+img_url[-7:],'ab')
+		f = open(new_path+'\\'+img_url[-7:],'ab')
 		f.write(img.content)
 		f.close()
