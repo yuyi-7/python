@@ -10,10 +10,11 @@ class download(object):
 		self.referer = referer
 		self.iplis = []
 		headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0','Referer':referer}
-		ht = requests.get('http://www.kuaidaili.com/ops/',headers = headers)
+		ht = requests.get('http://www.xicidaili.com',headers = headers)
 		soup = BeautifulSoup(ht.text,'lxml')
-		for i in soup.find_all(attrs={'data-title':'IP'}):
-			self.iplis.append(i.string.strip())
+		for i in soup.find_all('tr',class_='odd'):
+			j=i.find_all('td')[1].get_text()
+			self.iplis.append(j.strip())
 		self.uesr_agent_lis=["Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1",
             "Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11",
             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6",
