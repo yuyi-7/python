@@ -44,7 +44,7 @@ class download(object):
 			except:
 				if num_retries > 0:
 					time.sleep(5)
-					print(u'获取网页出错，5秒后讲获取第',num_retries,u'次')
+					print(u'获取网页出错，5秒后讲获取第',(7-num_retries),u'次')
 					return self.get(url,timeout,num_retries-1)
 				else:
 					print(u'开始使用代理')
