@@ -3,7 +3,7 @@
 import requests
 import os,random
 from bs4 import BeautifulSoup
-from python.mypython import Download
+from mypython import Download
 
 class gif(object):
 	def __init__(self,path):
@@ -22,11 +22,12 @@ class gif(object):
 			html = self.down.get(href,3)
 			html_soup = BeautifulSoup(html.text,'lxml')
 			page = html_soup.find('div',class_='btn-group clearfix full-width pagination-block').find_all('a')[-1].get_text()
-			for p in range(page):
-				page_url = href[0:-5]-+'/'+str(p)+'.html'
+			for p in range(int(page[1:3])):
+				page_url = href[0:-5]+'/'+str(p+1)+'.html'
 				img_html = self.down.get(page_url,3)
 				img_soup = BeautifulSoup(img_html.text,'lxml')
-				img_url = img_soup.find('div',class_='adetail').find_all('img')
+				img_url = img_soup.find('div',class_='adetail')
+				img = img_url.find_all('img')
 				for m in img_url:
 					myimg = m.get('src')
 					dimg = self.down.get(myimg,3)
@@ -34,6 +35,6 @@ class gif(object):
 					f = open(self.path+'\\'+myimg[-9:],'ab')
 					f.write(dimg.content)
 					f.close()
-pa = input('保存路径：')
-man = gif(pa)
+#pa = input('保存路径：')
+man = gif(r'D:\gif')
 man.getgif()
