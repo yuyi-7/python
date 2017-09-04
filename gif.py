@@ -4,6 +4,7 @@ import requests
 import os,random
 from bs4 import BeautifulSoup
 from mypython import Download
+import re
 
 class gif(object):
 	def __init__(self,path):
@@ -22,7 +23,7 @@ class gif(object):
 			html = self.down.get(href,3)
 			html_soup = BeautifulSoup(html.text,'lxml')
 			page = html_soup.find('div',class_='btn-group clearfix full-width pagination-block').find_all('a')[-1].get_text()
-			for p in range(int(page[1:3])):
+			for p in range(int(re.findall(r'\d+',page)[0])):
 				page_url = href[0:-5]+'/'+str(p+1)+'.html'
 				img_html = self.down.get(page_url,3)
 				img_soup = BeautifulSoup(img_html.text,'lxml')
