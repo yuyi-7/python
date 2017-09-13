@@ -4,14 +4,14 @@ import pandas as pd
 import math,csv,random
 import numpy as np
 from sklearn import linear_model
-from sklearn.model_selection import cross_val_predict
+from sklearn.model_selection import cross_val_score
 
 base_elo = 1600
 team_elos = {}
 team_stats = {}
-x = {}
-y = {}
-folder = 'data'
+x = []
+y = []
+folder = '/home/yuyi/下载/data'
 
 def initialize_data(Mstat,Ostat,Tstat):
 	new_Mstat = Mstat.drop(['Rk','Arena'],axis = 1)
@@ -45,7 +45,7 @@ def calc_elo(win_team,lose_team):
 		k=24
 
 	else:
-		k = 16
+		k=16
 
 	new_winner_rank = round(winner_rank + (k* (1 - odds)))
 	new_rank_diff = new_winner_rank - winner_rank
@@ -58,14 +58,14 @@ def build_dataSet(all_data):
 	x = []
 	skip = 0
 	
-	for index,row in all_data.iterrows:
-		Wteam = row['Wteam']
-		Lteam = row['Lteam']
+	for index,row in all_data.iterrows():
+		Wteam = row['WTeam']
+		Lteam = row['LTeam']
 
 		team1_elo = get_elo(Wteam)
 		team2_elo = get_elo(Lteam)
 
-		if row['Wloc'] == 'H':
+		if row['WLoc'] == 'H':
 			team1_elo += 100
 		else:
 			team2_elo += 100
@@ -86,7 +86,7 @@ def build_dataSet(all_data):
 			x.append(team2_features + team1_features)
 			y.append(1)
 
-		if skip == 0
+		if skip == 0:
 			print x
 			skip = 1
 
@@ -107,7 +107,7 @@ if __name__ == '__main__':
 
 	print('Fitting on %d game samples..' % len(x))
 	mode1 = linear_model.LogisticRegression()
-	mode.fit(x,y)
+	mode1.fit(x,y)
 
 	print 'Doing cross-validation..'
 	print cross_val_score(mode1,x,y,cv=10,scoring='accuracy',n_jobs=-1).mean()
