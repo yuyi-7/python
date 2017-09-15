@@ -20,18 +20,25 @@ class gif(object):
 		for i in li_lis:
 			title = i.get_text()
 			href = i.get('href')
-			html = self.down.get(href,3)
+			html = requests.get(href)
 			html_soup = BeautifulSoup(html.text,'lxml')
-			page = html_soup.find('div',class_='btn-group clearfix full-width pagination-block').find_all('a')[-1].get_text()
+			try:
+				page = html_soup.find('div',class_='btn-group clearfix full-width pagination-block').find_all('a')[-1].get_text()
+			except:
+				page='0'
 			for p in range(int(re.findall(r'\d+',page)[0])):
 				page_url = href[0:-5]+'/'+str(p+1)+'.html'
 				img_html = self.down.get(page_url,3)
+			#	img_html = requests.get(page_url)
 				img_soup = BeautifulSoup(img_html.text,'lxml')
 				img_url = img_soup.find('div',class_='adetail')
 				img = img_url.find_all('img')
 				for m in img_url:
 					myimg = m.get('src')
+					if myimg==None:
+						continue
 					dimg = self.down.get(myimg,3)
+				#	dimg = requests.get(myimg)
 					print('抓取%s，开始保存'%(myimg))
 					f = open(self.path+'\\'+myimg[-9:],'ab')
 					f.write(dimg.content)
