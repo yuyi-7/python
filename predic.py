@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import pandas as pd
 import math,csv,random
@@ -95,6 +95,23 @@ def build_dataSet(all_data):
 		team_elos[Lteam] = new_loser_rank
 	return np.nan_to_num(x),y
 
+def predict_winner(team_1,team_2,mode1):
+	features = []
+
+	features.append(get_elo(team_1))
+	for key,value in team_stats.loc[team_1].iteritems():
+		features.append(value)
+
+	features.append(get_elo(team_2) + 100)
+	for key,value in team_stats.loc[team_2].iteritems():
+		features.append(value)
+
+	features = np.nan_to_num(features)
+
+	return mode1.predict_proda([features])
+
+
+
 if __name__ == '__main__':
 	Mstat = pd.read_csv(folder + '/15-16Miscellaneous_Stat.csv')
 	Ostat = pd.read_csv(folder + '/15-16Opponent_Per_Game_Stat.csv')
@@ -111,3 +128,30 @@ if __name__ == '__main__':
 
 	print 'Doing cross-validation..'
 	print cross_val_score(mode1,x,y,cv=10,scoring='accuracy',n_jobs=-1).mean()
+
+	print 'Predicting on new schedule'
+	schedule1617 = pd.read_csv(folder + '/16-17Schedule.csv')
+	result = []
+
+	for index,row in schedule1617.iteritems():
+		print row[0],row[1]
+		team1 = row['Vteam']
+		team2 = row['Hteam']
+		pred = predict_winner(team1,team2,mode1)
+		prob = pred[0][0]
+
+		if prob > 0.5:
+			winner = team1
+			loser = team2
+			result.append([winner,loser,prob])
+
+		else:
+			winner = team1
+			loser = team2
+			result.append([winner,loser,1-prob])
+
+		with open('16-17Result.csv','wb') as f:
+			writer = csv.writer(f)
+			writer.writerow(['win','lose','probability'])
+			writer.writerows(result)
+
